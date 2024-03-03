@@ -1,15 +1,15 @@
 import jwt
-#screet_key = "hello"
-private_key = b"-----BEGIN PRIVATE KEY-----\nMIGEAgEAMBAGByqGSM49AgEGBS..."
-public_key = b"-----BEGIN PUBLIC KEY-----\nMHYwEAYHKoZIzj0CAQYFK4EEAC..."
-payload = {
-   'user_id' : 123456,
-   'username' : 'topu'
-   
-}
-encode_token= jwt.encode(payload,private_key,algorithm='HS256')
-print(encode_token)
-decode_token = jwt.decode(encode_token,public_key,algorithms='HS256')
-print(decode_token)
+import datetime
+import time
 
+encoded_token = jwt.encode({"exp": 1371720939}, "secret")
+expiration_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(seconds=20)
+encoded_token2 = jwt.encode({"exp": expiration_time}, "secret")
 
+print(encoded_token)
+time.sleep(25)
+try: 
+  print(encoded_token2)
+except Exception as e:
+   print("Error", e)
+   print("Time out")
